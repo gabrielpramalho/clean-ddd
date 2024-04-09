@@ -1,20 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Question } from '../../enterprise/entities/question'
-import { QuestionsRepository } from '../repositories/questions-repository'
-import { CreateQuestionUseCase } from './create-question'
+import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
+import { AnswersQuestionUseCase } from './answer-quenstion'
 
-const fakeAnswersRepository: QuestionsRepository = {
-  create: async (question: Question) => {},
-}
+let inMemoryAnswersQuestion: InMemoryAnswersRepository
+let sut: AnswersQuestionUseCase
 
-test('create an answer', async () => {
-  const createQuestion = new CreateQuestionUseCase(fakeAnswersRepository)
-
-  const {question} = await createQuestion.execute({
-    authorId: '1',
-    title: 'Nova Pergunta',
-    content: 'Conteúdo da pergunta',
+describe('Create Question', () => {
+  beforeEach(() => {
+    inMemoryAnswersQuestion = new InMemoryAnswersRepository()
+    sut = new AnswersQuestionUseCase(inMemoryAnswersQuestion)
   })
 
-  expect(question.id).toBeTruthy()
+  it('should be able to create an answer', async () => {
+    const { answer } = await sut.execute({
+      questionId: '1',
+      instructorId: '1',
+      content: 'Conteúdo da resposta',
+    })
+
+    expect(answer.content).toBeTruthy()
+    expect(inMemoryAnswersQuestion.items[0].id).toEqual(answer.id)
+  })
 })
