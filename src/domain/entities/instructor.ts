@@ -6,6 +6,11 @@ interface InstructorProps {
 }
 
 export class Instructor extends Entity<InstructorProps> {
+
+  get name() {
+    return this.props.name
+  }
+
   static create(
     props: InstructorProps, 
     id?: UniqueEntityID,
