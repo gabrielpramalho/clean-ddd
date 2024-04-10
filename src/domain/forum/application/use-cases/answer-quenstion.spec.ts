@@ -14,7 +14,7 @@ describe('Create Question', () => {
     const { answer } = await sut.execute({
       questionId: '1',
       instructorId: '1',
-      content: 'Conteúdo da resposta',
+      content: 'Content answer',
     })
 
     expect(answer.content).toBeTruthy()
