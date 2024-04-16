@@ -44,8 +44,6 @@ describe('Edit Question', () => {
       }),
     )
 
-    console.log(inMemoryQuestionAttachmentsRepository.items)
-
     await sut.execute({
       questionId: newQuestion.id.toValue(),
       authorId: 'author-1',
